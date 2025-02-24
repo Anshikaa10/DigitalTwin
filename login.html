@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Financial Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="login.js" defer></script>
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center h-screen">
+    <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-96">
+        <h2 class="text-2xl font-bold text-orange-400 mb-4 text-center">Login</h2>
+
+        <input type="email" id="email" placeholder="Email" class="w-full p-2 rounded bg-gray-700 text-white mb-3">
+        <input type="password" id="password" placeholder="Password" class="w-full p-2 rounded bg-gray-700 text-white mb-3">
+        
+        <button id="login-btn" class="bg-orange-500 px-4 py-2 rounded hover:bg-orange-600 w-full">Login</button>
+
+        <!-- Error message display -->
+        <p id="error-message" class="text-red-500 mt-2"></p>
+    </div>
+</body>
+</html>

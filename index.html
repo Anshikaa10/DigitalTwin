@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalTwin - AI-Powered Finance Tracking</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+    <script src="firebase-auth.js" defer></script>
+
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            background-color: #0e0e0e;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        header {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+        }
+        header h1 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+        header p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        button {
+            background: linear-gradient(135deg, #ff6600, #ff3300);
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 10px;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(255, 102, 0, 0.3);
+        }
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(255, 102, 0, 0.5);
+        }
+        section {
+            padding: 40px;
+            text-align: center;
+            margin: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+        }
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            text-align: left;
+        }
+        .feature-box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+        }
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(255, 255, 255, 0.2);
+        }
+        .testimonial-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .testimonial {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+        }
+        .testimonial:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(255, 255, 255, 0.2);
+        }
+        .faq {
+            padding: 40px;
+            text-align: center;
+            margin: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+        }
+        .faq p {
+            text-align: left;
+            max-width: 800px;
+            margin: 10px auto;
+        }
+
+
+
+        footer {
+            background-color: #000000;
+            color: #c0c0c0;
+            text-align: center;
+            padding: 30px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+        nav a {
+            color: #c0c0c0;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .newsletter input {
+            padding: 12px 20px;
+            width: 70%;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            height: 45px;
+        }
+        .newsletter button {
+            height: 45px;
+            vertical-align: middle;
+        }
+        @media (max-width: 768px) {
+            .features-container, .testimonial-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Take Control of Your Finances with AI-Powered Insights</h1>
+        <p>Track your expenses, plan your future, and make smarter financial decisions.</p>
+        <button onclick="window.location.href='signup.html'" id="signup-btn">Sign Up</button>
+        <button onclick="window.location.href='login.html'" id="login-btn">Log In</button>
+
+    </header>
+    <section class="why-choose-us">
+        <h2>Why Choose Us?</h2>
+        <div class="features-container">
+            <div class="feature-box">
+                <h3>AI-Driven Insights</h3>
+                <p>Get personalized financial recommendations based on your spending habits.</p>
+            </div>
+            <div class="feature-box">
+                <h3>Secure & Encrypted</h3>
+                <p>We use industry-standard encryption to keep your financial data safe.</p>
+            </div>
+            <div class="feature-box">
+                <h3>Multi-Platform Support</h3>
+                <p>Access your financial insights on desktop, mobile, and tablet devices.</p>
+            </div>
+        </div>
+    </section>
+    <section class="reviews">
+        <h2>What Our Users Say</h2>
+        <div class="testimonial-container">
+            <div class="testimonial">
+                <p>"DigitalTwin has completely transformed how I manage my finances. The AI-driven insights are incredibly accurate and helpful!"</p>
+                <strong>- Sarah Williams, New York</strong>
+            </div>
+            <div class="testimonial">
+                <p>"I love how easy it is to track my expenses. The security features also give me peace of mind."</p>
+                <strong>- Rahul Sharma, Mumbai</strong>
+            </div>
+            <div class="testimonial">
+                <p>"Managing international transactions has never been easier. The multi-currency support is a game changer!"</p>
+                <strong>- Emily Chen, London</strong>
+            </div>
+        </div>
+    </section>
+    <section class="newsletter">
+        <h2>Stay Updated!</h2>
+        <p>Subscribe to our newsletter for financial insights and updates.</p>
+        <input type="email" placeholder="Enter your email">
+        <button>Subscribe</button>
+    </section>
+    <section class="faq">
+        <h2>Frequently Asked Questions</h2>
+        <p><strong>How secure is my financial data?</strong></p>
+        <p>We use state-of-the-art encryption to ensure your data remains private and secure.</p>
+        <p><strong>Can I integrate my bank account?</strong></p>
+        <p>Yes, our platform supports integration with multiple banking services for seamless tracking.</p>
+        <p><strong>Does this service support multiple currencies?</strong></p>
+        <p>Yes, we provide support for multiple currencies to help users manage international transactions.</p>
+        <p><strong>Is there a mobile app available?</strong></p>
+        <p>Yes, our mobile app is available for both iOS and Android.</p>
+        <p><strong>What is the cost of using DigitalTwin?</strong></p>
+        <p>We offer both free and premium plans, with additional features in the premium version.</p>
+        <p><strong>Can I set financial goals?</strong></p>
+        <p>Yes, you can set financial goals and track your progress using our goal-tracking feature.</p>
+        <p><strong>How often is my data updated?</strong></p>
+        <p>Your data is updated in real-time to ensure accuracy and reliability.</p>
+    </section>
+    <footer>
+        <p>&copy; 2025 DigitalTwin. All rights reserved.</p>
+        <nav>
+            <a href="#">About</a> | <a href="#">Features</a> | <a href="#">Pricing</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact Us</a>
+        </nav>
+    </footer>
+</body>
+</html>

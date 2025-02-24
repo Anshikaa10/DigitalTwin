@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script>
+    <style>
+        body {
+            font-family: Georgia, serif;
+        }
+    </style>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCAnkCWfluRim9ohIHNqfOIKyXHgeMGq5E",
+            authDomain: "digitaltwin-3a1da.firebaseapp.com",
+            projectId: "digitaltwin-3a1da",
+            storageBucket: "digitaltwin-3a1da.firebasestorage.app",
+            messagingSenderId: "138442510963",
+            appId: "1:138442510963:web:401e28bde29bdf1b8d5006"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        function logout() {
+            auth.signOut().then(() => {
+                window.location.href = "login.html";
+            }).catch((error) => {
+                alert("Logout Failed: " + error.message);
+            });
+        }
+
+        auth.onAuthStateChanged((user) => {
+    if (!user) {
+        window.location.href = "login.html";  // ✅ Redirect back to login if not logged in
+    } else {
+        document.getElementById("user-email").innerText = user.email;
+    }
+});
+
+
+        function updateFinancialData() {
+            let income = parseFloat(document.getElementById("income").value) || 0;
+            let expenses = parseFloat(document.getElementById("expenses").value) || 0;
+            let savings = parseFloat(document.getElementById("savings").value) || 0;
+
+            let goalPercentage = income > 0 ? (savings / income) * 100 : 0;
+            document.getElementById("savingsGoal").value = goalPercentage;
+            document.getElementById("goalValue").innerText = goalPercentage.toFixed(2);
+
+            financeChart.data.datasets[0].data = [income, expenses, savings];
+            financeChart.update();
+        }
+    </script>
+</head>
+<body class="bg-black text-white">
+    <nav class="bg-gray-900 p-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-orange-400">Finance Dashboard</h1>
+        <a href="blogs.html" class="text-white hover:text-orange-400">Blogs</a>
+        <a href="events.html" class="text-white hover:text-orange-400">Events</a>
+        <a href="scenario.html" class="text-white hover:text-orange-400">Simulations</a>
+        <button onclick="logout()" class="bg-red-600 px-4 py-2 rounded hover:bg-red-700">Logout</button>
+    </nav>
+
+    <div class="container mx-auto p-6">
+        <h2 class="text-xl font-bold mb-4 text-orange-300">Get Started! <span id="user-email"></span></h2>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg mt-6">
+            <h3 class="text-lg font-semibold">Enter Your Financial Details</h3>
+            <input type="number" id="income" placeholder="Income" class="w-full p-2 rounded bg-gray-700 text-white mt-2" oninput="updateFinancialData()">
+            <input type="number" id="expenses" placeholder="Expenses" class="w-full p-2 rounded bg-gray-700 text-white mt-2" oninput="updateFinancialData()">
+            <input type="number" id="savings" placeholder="Savings" class="w-full p-2 rounded bg-gray-700 text-white mt-2" oninput="updateFinancialData()">
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg mt-6">
+            <h3 class="text-lg font-semibold">Financial Insights & Trends</h3>
+            <canvas id="financeChart"></canvas>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg mt-6">
+            <h3 class="text-lg font-semibold">Savings Goal Accomplishment</h3>
+            <input type="range" id="savingsGoal" min="0" max="100" value="0" class="w-full mt-2" readonly>
+            <p class="text-center text-orange-400 font-bold mt-2">Goal Accomplished: <span id="goalValue">0</span>%</p>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg mt-6">
+            <h3 class="text-lg font-semibold">Debt Tracker</h3>
+            <input type="text" placeholder="Debt Name" class="w-full p-2 rounded bg-gray-700 text-white mt-2">
+            <input type="number" placeholder="Amount Owed" class="w-full p-2 rounded bg-gray-700 text-white mt-2">
+            <button class="bg-orange-500 px-4 py-2 rounded hover:bg-orange-600 w-full mt-2">Add Debt</button>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg mt-6">
+            <h3 class="text-lg font-semibold">Investment Overview</h3>
+            <input type="text" placeholder="Investment Name" class="w-full p-2 rounded bg-gray-700 text-white mt-2">
+            <input type="number" placeholder="Amount Invested" class="w-full p-2 rounded bg-gray-700 text-white mt-2">
+            <button class="bg-orange-500 px-4 py-2 rounded hover:bg-orange-600 w-full mt-2">Add Investment</button>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg mt-6">
+            <h3 class="text-lg font-semibold">Bill Payment Reminders</h3>
+            <input type="text" placeholder="Bill Name" class="w-full p-2 rounded bg-gray-700 text-white mt-2">
+            <input type="date" class="w-full p-2 rounded bg-gray-700 text-white mt-2">
+            <button class="bg-orange-500 px-4 py-2 rounded hover:bg-orange-600 w-full mt-2">Add Reminder</button>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('financeChart').getContext('2d');
+        const financeChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Income', 'Expenses', 'Savings'],
+                datasets: [{
+                    label: 'Financial Overview',
+                    data: [0, 0, 0],
+                    backgroundColor: ['#f97316', '#dc2626', '#16a34a'],
+                }]
+            },
+        });
+    </script>
+</body>
+</html>
